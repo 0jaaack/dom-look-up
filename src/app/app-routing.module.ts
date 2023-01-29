@@ -5,7 +5,7 @@ import { ViewComponent } from "./view/view.component";
 
 const routes: Routes = [
   { path: "", component: SearchComponent },
-  { path: "/view", component: ViewComponent },
+  { path: "view", component: ViewComponent },
 ];
 
 @NgModule({

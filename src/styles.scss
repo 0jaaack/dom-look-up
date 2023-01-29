@@ -1,6 +1,11 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   position: fixed;
-  padding: 0;
-  margin: 0;
   font: 300 16px "sans-serif";
 }

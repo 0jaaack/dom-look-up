@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { debounceTime, Subject, tap, switchMap, filter, throwError } from "rxjs";
+import { debounceTime, Subject, switchMap, filter, tap } from "rxjs";
 import { DomTreeService } from "../dom-tree.service";
 import { Router } from "@angular/router";
 
@@ -25,8 +25,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.inputEventSubject$
       .pipe(
-        tap(console.log),
-        debounceTime(300),
+        debounceTime<any>(300),
         filter((url: string) => urlRegExp.test(url)),
         switchMap(async (url) => url && this.tree.parseDomTree((url as string)))
       )
@@ -34,13 +33,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.enterEventSubject$
       .pipe(
-        tap(console.log),
-        filter((url: string) => urlRegExp.test(url)),
+        tap((url) => this.message = urlRegExp.test(url) ? "" : "url을 제대로 입력해주세요."),
+        filter<any>((url: string) => urlRegExp.test(url)),
       )
       .subscribe((url) => {
-        if (url) {
-          this.router.navigateByUrl("/view");
-        }
+        this.router.navigateByUrl("/view");
       });
   }
 

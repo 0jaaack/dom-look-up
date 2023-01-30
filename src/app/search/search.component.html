@@ -7,5 +7,11 @@
     />
   </div>
   <h1>DOM Look Up!</h1>
-  <input type="text" placeholder="url을 입력해주세요">
+  <p>{{ message }}</p>
+  <input
+    type="url"
+    placeholder="Enter the url of the site"
+    (input)="handleInput($event)"
+    (keydown)="handleKeyDown($event)"
+  >
 </div>

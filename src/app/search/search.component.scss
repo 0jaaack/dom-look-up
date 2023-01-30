@@ -1,7 +1,37 @@
-.container {
+.search {
   position: relative;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 100vw;
+  height: 100vh;
+
+  &__title {
+    color: #EE7934;
+    font-size: 6.5rem;
+    font-style: italic;
+    font-weight: 800;
+  }
+
+  &__message {
+    height: 2rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: red;
+  }
+
+  &__search-bar {
+    height: 3.5rem;
+    width: 40vw;
+    border-radius: 1.5rem;
+    outline: none;
+    border: 0;
+    padding: 0 2rem;
+    font-size: 1.2rem;
+    background-color: #E5E5E5;
+  }
 }
 
 .background-image {

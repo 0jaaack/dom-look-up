@@ -1,16 +1,17 @@
-<div class="container">
-  <div class="background-image background-image__frame">
-    <img
-      class="background-image background-image__img"
-      src="../../assets/background.webp"
-      alt="background-forest"
-    />
-  </div>
-  <h1>DOM Look Up!</h1>
-  <p>{{ message }}</p>
+<div class="background-image background-image__frame">
+  <img
+    class="background-image background-image__img"
+    src="../../assets/background.webp"
+    alt="background-forest"
+  />
+</div>
+<div class="search">
+  <h1 class="search__title">DOM Look Up!</h1>
+  <p class="search__message">{{ message }}</p>
   <input
+    class="search__search-bar"
     type="url"
-    placeholder="Enter the url of the site"
+    placeholder="Enter the URL of the site"
     (input)="handleInput($event)"
     (keydown)="handleKeyDown($event)"
   >

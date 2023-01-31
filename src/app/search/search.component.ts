@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { debounceTime, Subject, switchMap, filter, tap } from "rxjs";
 import { DomTreeService } from "../dom-tree.service";
 import { Router } from "@angular/router";
+import { URL } from "src/types";
 
 const urlRegExp = new RegExp(
   /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
@@ -13,8 +14,8 @@ const urlRegExp = new RegExp(
   styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  inputEventSubject$ = new Subject();
-  enterEventSubject$ = new Subject();
+  inputEventSubject$ = new Subject<URL>();
+  enterEventSubject$ = new Subject<URL>();
   message = "";
 
   constructor(
@@ -25,18 +26,19 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.inputEventSubject$
       .pipe(
-        debounceTime<any>(300),
-        filter((url: string) => urlRegExp.test(url)),
-        switchMap(async (url) => url && this.tree.parseDomTree((url as string)))
+        debounceTime(300),
+        filter((url) => urlRegExp.test(url)),
+        tap((url) => console.log("ok", url)),
+        switchMap(async (url) => url && this.tree.parseDomTree(url))
       )
       .subscribe();
 
     this.enterEventSubject$
       .pipe(
-        tap((url) => this.message = urlRegExp.test(url) ? "" : "url을 제대로 입력해주세요."),
-        filter<any>((url: string) => urlRegExp.test(url)),
+        tap((url) => this.message = urlRegExp.test(url) ? "" : "Please enter the correct url"),
+        filter((url) => urlRegExp.test(url)),
       )
-      .subscribe((url) => {
+      .subscribe(() => {
         this.router.navigateByUrl("/view");
       });
   }
@@ -48,11 +50,15 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   handleKeyDown(event: KeyboardEvent) {
     if (event.key === "Enter") {
-      this.enterEventSubject$.next((event.target as HTMLInputElement).value);
+      this.enterEventSubject$.next(
+        ((event.target as HTMLInputElement).value as URL)
+      );
     }
   }
 
   handleInput(event: Event) {
-    this.inputEventSubject$.next((event.target as HTMLInputElement).value);
+    this.inputEventSubject$.next(
+      ((event.target as HTMLInputElement).value as URL)
+    );
   }
 }

@@ -1,0 +1,28 @@
+<div class="card__container">
+  <ul class="card__list">
+    <li class="card__item" *ngIf="meta.title">
+      <h3 class="card__item__name">title</h3>
+      <p class="card__item__value">{{ meta.title }}</p>
+    </li>
+    <li class="card__item" *ngIf="meta.description">
+      <h3 class="card__item__name">description</h3>
+      <p class="card__item__value">{{ meta.description }}</p>
+    </li>
+    <li class="card__item" *ngIf="meta.charset">
+      <h3 class="card__item__name">charset</h3>
+      <p class="card__item__value">{{ meta.charset }}</p>
+    </li>
+    <li class="card__item" *ngIf="meta.viewPort">
+      <h3 class="card__item__name">viewport</h3>
+      <p class="card__item__value">{{ meta.viewPort }}</p>
+    </li>
+    <li class="card__item" *ngIf="meta.linkList.length">
+      <h3 class="card__item__name">
+        link
+      </h3>
+      <ul class="card__item__sub-list"  *ngFor="let link of meta.linkList">
+        <li class="card__item__value">{{ link.rel }} | {{ link.href }}</li>
+      </ul>
+    </li>
+  </ul>
+</div>

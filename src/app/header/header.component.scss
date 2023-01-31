@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 26vw;
+  border-bottom: 1px solid #E5E5E5;
+  height: 9vh;
+
+  &__logo {
+    color: #EE7934;
+    font-size: 2.5rem;
+    font-style: italic;
+    font-weight: 800;
+  }
+
+  &__search {
+    height: 2.5rem;
+    line-height: 6vh;
+    width: 30vw;
+    border-radius: 1.5rem;
+    outline: none;
+    border: 0;
+    padding: 0 2rem;
+    font-size: 1.2rem;
+    background-color: #E5E5E5;
+  }
+}

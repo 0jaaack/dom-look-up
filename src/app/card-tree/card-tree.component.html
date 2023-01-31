@@ -1,0 +1,42 @@
+  <div class="card__container">
+
+    <h2 class="card__title">
+      &lt;{{ node.tag }}&gt;
+    </h2>
+
+    <ul class="card__list">
+
+      <li class="card__item" *ngIf="node.id">
+        <h3 class="card__item__name">id</h3>
+        <p class="card__item__value">{{ node.id }}</p>
+      </li>
+
+      <li class="card__item" *ngIf="node.class">
+        <h3 class="card__item__name">class</h3>
+        <p class="card__item__value">{{ node.class }}</p>
+      </li>
+
+      <li class="card__item" *ngIf="node.style">
+        <h3 class="card__item__name">style</h3>
+        <p class="card__item__value">{{ node.style }}</p>
+      </li>
+
+      <li class="card__item" *ngIf="node.text">
+        <h3 class="card__item__name">text</h3>
+        <p class="card__item__value">{{ node.text }}</p>
+      </li>
+
+      <li class="card__item" *ngIf="node.children.length">
+        <h3 class="card__item__name">
+          children
+        </h3>
+        <ul class="card__item__sub-list"  *ngFor="let child of node.children">
+          <li class="card__item__sub-item">
+            <app-card-tree [node]="child" class="card__item__children"></app-card-tree>
+          </li>
+        </ul>
+        <div class="height"></div>
+      </li>
+
+    </ul>
+  </div>

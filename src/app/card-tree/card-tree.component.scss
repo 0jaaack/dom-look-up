@@ -1,0 +1,59 @@
+.height {
+  height: 0.2rem;
+}
+
+.card {
+  &--node {
+    width: max-content;
+  }
+
+  &__container {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &__container::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__title {
+    width: 100%;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+    height: 100%;
+    list-style: none;
+    margin-left: 1rem;
+  }
+
+  &__item {
+    margin-bottom: 1rem;
+
+    &__name {
+      width: 85vw;
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    &__value {
+      margin-left: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    &__sub-list {
+      margin: 1rem 0.5rem;
+      list-style: none;
+    }
+    &__sub-item {
+      padding: 1.3rem;
+      border-radius: 1rem;
+      background-color: #E5E5E5;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+  }
+}

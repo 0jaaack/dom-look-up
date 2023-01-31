@@ -1,0 +1,38 @@
+.card {
+  &__container {
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  &__container::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__item {
+    margin-bottom: 1rem;
+
+    &__name {
+      width: 85vw;
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    &__value {
+      margin-left: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    &__sub-list {
+      margin: 0.5rem;
+      margin-bottom: 0;
+      margin-left: 1.3rem;
+    }
+  }
+}

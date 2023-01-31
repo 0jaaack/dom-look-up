@@ -9,6 +9,7 @@ import { ViewComponent } from "./view/view.component";
 import { HeaderComponent } from './header/header.component';
 import { CardMetaComponent } from './card-meta/card-meta.component';
 import { CardTreeComponent } from './card-tree/card-tree.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CardTreeComponent } from './card-tree/card-tree.component';
     ViewComponent,
     HeaderComponent,
     CardMetaComponent,
-    CardTreeComponent
+    CardTreeComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,

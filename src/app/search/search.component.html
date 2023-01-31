@@ -8,11 +8,5 @@
 <div class="search">
   <h1 class="search__title">DOM Look Up!</h1>
   <p class="search__message">{{ message }}</p>
-  <input
-    class="search__search-bar"
-    type="url"
-    placeholder="Enter the URL of the site"
-    (input)="handleInput($event)"
-    (keydown)="handleKeyDown($event)"
-  >
+  <app-search-bar (onError)="handleError(message)"></app-search-bar>
 </div>

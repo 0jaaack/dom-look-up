@@ -2,18 +2,35 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
 }
 
-.header-bar {
+.error {
+  position: absolute;
   display: flex;
-  height: 6vh;
-  background: tomato;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  color: #EE7934;
+  font-size: 3rem;
+  font-style: italic;
+  font-weight: 800;
+  z-index: 9;
+  user-select: none;
 
-  &__logo {
-  }
-
-  &__search-bar {
+  button {
+    cursor: pointer;
+    padding: 1rem 2.5rem;
+    color: #212124;
+    background: #EE7934;
+    font-size: 1.4rem;
+    border: 0;
+    border-radius: 2rem;
+    font-weight: 800;
+    font-style: italic;
   }
 }
 
@@ -21,52 +38,55 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 1.5rem;
   height: 100%;
-  padding: 1rem;
-  overflow: hidden;
+  padding: 1rem 3rem;
 
   &__section {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-
-    &--meta-tag {
-      height: 20%;
-    }
-
-    &--dom-tree {
-      height: 77%;
-    }
+    gap: 0.5rem;
 
     &__title {
+      font-size: 2rem;
       height: 2rem;
+      color: #EE7934;
+      font-style: italic;
     }
 
     &__card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+      background-color: #E5E5E5;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       height: 100%;
-      overflow: scroll;
+
+      &--meta-tag {
+        height: 20vh;
+        display: flex;
+      }
+
+      &--dom-tree {
+        height: 47vh;
+      }
+
+      &--null {
+        background-image: linear-gradient(
+          100deg, rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 80%
+        );
+        background-repeat: repeat-y;
+        background-size: 50px 100%;
+        background-position: 0 0;
+        animation: shine 1s infinite;
+      }
     }
   }
 }
 
-.card {
-  padding: 1rem;
-  border: 1px solid black;
-
-  &--node {
-    width: max-content;
-  }
-
-  &__title {
-    width: 100%;
-  }
-
-  &__item{
-    &__name {
-      width: 85vw;
-    }
-
-    &__value {
-    }
+@keyframes shine {
+  to {
+    background-position: 100% 0;
   }
 }

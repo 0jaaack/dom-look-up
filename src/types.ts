@@ -5,7 +5,7 @@ export type HTTPResponse = {
 };
 
 export enum CARD {
-  DOM_TREE = "CARD/MetaDataList",
+  DOM_TREE = "CARD/DOM_TREE",
   META_DATA_LIST = "CARD/META_DATA_LIST",
 }
 
@@ -29,6 +29,5 @@ export type MetaDataList = {
   title: string,
   description: string,
   linkList: Link[],
-  charset: string,
-  viewPort: string,
+  viewport: string,
 };

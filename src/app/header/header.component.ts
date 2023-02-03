@@ -6,5 +6,4 @@ import { Component } from "@angular/core";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent {
-  // @Input() node: DomTree | null = null;
 }

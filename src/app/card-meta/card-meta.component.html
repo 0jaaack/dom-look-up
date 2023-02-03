@@ -8,13 +8,9 @@
       <h3 class="card__item__name">description</h3>
       <p class="card__item__value">{{ meta.description }}</p>
     </li>
-    <li class="card__item" *ngIf="meta.charset">
-      <h3 class="card__item__name">charset</h3>
-      <p class="card__item__value">{{ meta.charset }}</p>
-    </li>
-    <li class="card__item" *ngIf="meta.viewPort">
+    <li class="card__item" *ngIf="meta.viewport">
       <h3 class="card__item__name">viewport</h3>
-      <p class="card__item__value">{{ meta.viewPort }}</p>
+      <p class="card__item__value">{{ meta.viewport }}</p>
     </li>
     <li class="card__item" *ngIf="meta.linkList.length">
       <h3 class="card__item__name">

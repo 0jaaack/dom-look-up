@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError, Subject } from "rxjs";
+import { catchError, tap, throwError } from "rxjs";
 import { DomTree, URL, HTTPResponse, MetaDataList, CARD } from "src/types";
 
 @Injectable({
   providedIn: "root"
 })
 export class DomTreeService {
-  tree = new Subject<DomTree>();
-  meta = new Subject<MetaDataList>();
+  tree!: DomTree;
+  meta!: MetaDataList;
 
   constructor(
     private http: HttpClient
@@ -29,20 +29,10 @@ export class DomTreeService {
   parseMetaData(html: Document): MetaDataList {
     return {
       kind: CARD.META_DATA_LIST,
-      title: "title example",
-      description: "description example",
-      linkList: [
-        {
-          rel: "stylesheet",
-          href: "styles.css",
-        },
-        {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-        },
-      ],
-      charset: "utf-8",
-      viewPort: "width=device-width, initial-scale=1",
+      title: html.querySelector("title")?.textContent ?? "",
+      description: html.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "",
+      linkList: Array.from(html.querySelectorAll("link")).map(({ href, rel }) => ({ href, rel })),
+      viewport: html.querySelector<HTMLMetaElement>('meta[name="viewport"]')?.content ?? "",
     };
   }
 
@@ -50,6 +40,11 @@ export class DomTreeService {
     return this.http
       .get<HTTPResponse>(`/api/?url=${url}`)
       .pipe(
+        tap((data) => {
+          if (data.body === "error") {
+            throwError(() => new Error("Failed to get data."));
+          }
+        }),
         catchError(async (error) => console.log(error))
       )
       .subscribe((val) => {
@@ -58,11 +53,8 @@ export class DomTreeService {
         const document = parser.parseFromString(html, "text/html");
         const body = document.querySelector("body")!;
 
-        const aa = this.parseElement(body);
-        console.log(aa)
-
-        this.meta.next(this.parseMetaData(document));
-        this.tree.next(aa);
+        this.meta = this.parseMetaData(document);
+        this.tree = this.parseElement(body);
       });
   }
 }

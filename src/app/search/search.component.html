@@ -8,5 +8,8 @@
 <div class="search">
   <h1 class="search__title">DOM Look Up!</h1>
   <p class="search__message">{{ message }}</p>
-  <app-search-bar (onError)="handleError(message)"></app-search-bar>
+  <app-search-bar
+    size="large"
+    (onError)="handleError(message)"
+  ></app-search-bar>
 </div>

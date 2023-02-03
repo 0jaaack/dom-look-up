@@ -1,7 +1,8 @@
 <input
-  class="search-bar"
+  [ngClass]="'search-bar search-bar--' + size"
   type="url"
   placeholder="Enter the URL of the site"
   (input)="handleInput($event)"
   (keydown)="handleKeyDown($event)"
+  [value]="input"
 >

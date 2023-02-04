@@ -6,7 +6,7 @@ Angular를 이용하여 제작한 프로젝트입니다. Angular를 통해 프�
 <br />
 <br />
 
-[Dom Look up!](https://comfy-muffin-766d2f.netlify.app/)
+[배포 ](https://comfy-muffin-766d2f.netlify.app/)
 <br />
 <br />
 

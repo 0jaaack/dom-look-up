@@ -1,27 +1,128 @@
-# DomLookUp
+# Dom Look up!
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.3.
+Dom Look Up!은 페이지의 DOM(Document Object Model) 구조를 시각화하여 보여주는 서비스입니다.
 
-## Development server
+Angular를 이용하여 제작한 프로젝트입니다. Angular를 통해 프로젝트를 만들어보고 기존에 사용했던 React와의 개발 방식과 개념의 차이를 이해해보는 과정을 가졌습니다.
+<br />
+<br />
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+[Dom Look up!](https://comfy-muffin-766d2f.netlify.app/)
+<br />
+<br />
 
-## Code scaffolding
+# Table of Contents
+- [Introduction](#introduction)
+- [왜 Angular인가?](#왜-angular인가)
+- [Angular를 사용하면서 느낀 점](#angular를-사용하면서-느낀-점)
+  - [타입스크립트 기반의 웹 프레임워크](#타입스크립트-기반의-웹-프레임워크)
+  - [의존성 주입으로 전역 서비스 로직 관리](#의존성-주입으로-전역-서비스-로직-관리)
+  - [observable 기반의 이벤트 처리](#observable-기반의-이벤트-처리)
+- [고민했던 점](#고민했던-점)
+  - [파싱 데이터 로딩 최적화(pre load)](#파싱-데이터-로딩-최적화pre-load)
+  - [BEM 구조 CSS 개발](#bem-구조-css-개발)
+- [아쉬웠던 점](#아쉬웠던-점)
+  - [Dom 구조를 보여주는 방식](#dom-구조를-보여주는-방식)
+  - [더 깊은 세계를 탐험하지 못한 점](#더-깊은-세계를-탐험하지-못한-점)
+<br />
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Introduction
 
-## Build
+- 프로젝트 기간: 2023.01.28 ~ 2023.01.31.(4일)
+- 기술 스택: `Angular`
+- 배포: `Netlify`
+<br />
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# 왜 Angular인가?
 
-## Running unit tests
+지금까지는 `React`만을 사용해서 Frontend 개발을 해왔습니다. 웹 프레임워크에는 `Angular`, `Vue`, `Svelte` 등 다양한 선택지가 있어 다른 웹 프레임워크 환경을 알아보고 저변을 넓힐 수 있는 기회가 될 거라 생각했습니다. 단순히 표면적으로 다른 프레임워크와의 차이를 이해하는 것이 아니라, 직접 개발을 해보면서 느끼고 싶어서 해보게 되었습니다.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`Angular`를 하게 된 이유는 `rxjs`의 `Observable`을 이용한 개발 방식을 체험해보고 싶어서 였습니다. rxjs는 데이터를 하나의 스트림으로 다루어서 선언적으로 개발할 수 있는 도구라고 알고있어서, 이를 체험해보고 싶었습니다. 또한 pull 방식의 업데이트가 일어나게 되는 `React`와 다르게 Push 방식의 업데이트가 발생하는 `Angular`가 어떻게 다른 지도 알고싶었습니다.
+<br />
+<br />
 
-## Running end-to-end tests
+# Angular를 사용하면서 느낀 점
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 타입스크립트 기반의 웹 프레임워크
+    
+`Angular`는 웹 프레임워크라 할 만 했습니다. 라우팅, 스타일링, 빌드 등 `Angular` 하나만으로 웹 서비스 개발을 끝낼 수 있도록 되어있어 좋았습니다. CLI를 통해서 터미널에서 명령어를 입력해 손쉽게 컴포넌트나 서비스를 생성할 수 있어서 편하기도 했습니다. CLI를 통해 생성한 컴포넌트는 colocation을 준수하면서 하나의 컴포넌트 디렉토리에 템플릿과 CSS, Test 파일이 포함되어 있기도 했는데요. 이렇게 편한 점들이 ‘`React`는 프레임워크가 아닌 라이브러리다’라고 하는 의미를 깨달았던 것 같습니다. 
+    
+이러한 서비스들이 한 번에 제공되는 장점은 호환성을 걱정할 필요가 없다는 것일 것입니다. 예를 들어 다른 서버로 데이터 요청을 보낼 수 있는 `HttpModule`의 경우 같은 버전의 Angular는 항상 호환되는 `HttpModule`을 갖게 될 텐데요. 완전히 대치되는 개념은 아니지만, `React`에는 `Suspense`라는 기능을 통해 컴포넌트의 지연 로딩을 구현할 수 있는데요. `React`는 보통 별도의 상태 관리 라이브러리나 데이터 페칭 도구를 사용하는 경우가 많습니다. 이 도구들이 `Suspense`와 같은 기능을 지원하는 지 확인하는 작업을 많이 했었는데 반해, `Angular`는 이러한 과정을 하지 않아도 됩니다.
+    
+특유의 데코레이터 문법(`@`)을 이용한 클래스 방식의 문법이나, 타입스크립트를 통한 개발 방식이 새롭게 다가오기도 했습니다. 최근에 자바스크립트에 추가 된 문법이다 보니 처음에는 적응하기가 어려웠는데, 클래스를 더 편리하고 확장 가능하게 만들어주는 문법을 새로이 익히게 된 것 같아 좋았습니다. 타입 스크립트로는 직접 프로젝트 개발을 해본 것이 처음인데, 타입 지정을 통한 개발 방식이 좋았습니다. 특히 Dom Tree 데이터는 일관적인 구조를 가지고 있는데, 이러한 데이터를 다룰 때 타입 확인을 따로 해주지 않았도 타입이 보장되어 있는 점이 편했습니다.
 
-## Further help
+### 의존성 주입으로 전역 서비스 로직 관리
+    
+일반적인 `React`에서는 서비스 로직이 컴포넌트에 종속되는 경우가 빈번했는데요. 이를 위해서 전역 상태관리 도구를 쓰는 등의 작업이 필요했습니다. 물론 `Angular`도 상태관리 도구를 갖고 있지만, `Angular`에서 제공하는 서비스와 의존성 주입으로 전역으로 데이터 관리를 할 수 있는 점이 좋았습니다.
+    
+`React`는 hook을 이용한 방식으로 손쉽게 로직을 분리하고 재사용할 수 있는 장점이 있습니다. 그리고 다양한 상태관리 도구와 방식으로 비즈니스 로직을 분리해줄 수 있다는 장점이 있습니다. 반면 `Angular`는 **손쉽고 안정적인 서비스 로직 관리 방식을 제공**하면서 **더 거대한 규모의 작업에서 안정적으로 작업할 수 있는 방식**이 될 수 있을 거라는 생각을 했습니다.
+    
+### Observable 기반의 이벤트 처리
+    
+Observable은 `rxjs`에서 데이터의 처리를 위해 사용하는 자체적인 데이터 타입입니다. `Angular`에서는 `rxjs`를 이용하여 이벤트를 처리하는 것이 일반적이고, 많은 데이터들이 Observable로 이루어져 있습니다. 
+    
+`React`와의 차이점은 이벤트 처리에서 크게 나타난다고 볼 수 있었습니다. 어떤 이벤트가 발생 시, 해당하는 핸들러 함수를 실행하라는 방식의 `React`는 직관적이지만 보다 복잡한 요구사항에서는 코드가 장황해지는 현상이 있습니다. 반면 `rxjs`는 처음 배울 때의 개발 방식에 대한 개념 이해가 필요한 반면, **보다 선언적인 방식인 개발이 가능**해 복잡한 요구사항을 의외로 손쉽게 해결해 줄 수 있다는 점이었습니다.
+    
+`rxjs`는 처음에 개념을 잡기가 힘들었습니다. 이를 테면 Observable을 이해는 해도, 어떻게 원하는 데이터를 Observable로 만들 것인가? 하는 문제가 있었는데요. 제가 당시 구현하고자 했던 건 단순히 input에 입력되는 value에 대한 유효성 검사를 실시하고, 이를 화면에 나타내주도록 하는 것이었는데 쉽지 않았을 정도로 처음에 어려움을 갺었습니다.
+    
+`Angular`의 많은 기능들은 Observable 데이터를 제공합니다. 예를 들어 `HttpModule`의 요청 결과는 Obseverble로 반환하는데요. 이를 다루려면 Observable과 `rxjs`의 operator에 대한 이해가 필요합니다.
+    
+`rxjs`는 단순히 `Angular`에서만 활용할 수 있는 건 아니고, 때에 따라서는 `rxjs`를 활용해서 리액트에도 적용할 수 있겠다고 생각하게 되었습니다. 그래서 조사해보니 `React`에서도 `rxjs`를 활용하는 예시를 많이 만날 수 있었고 특히 `Redux`에서 reducer의 복잡한 동작을 처리할 때 유용할 수 있다는걸 알게 되었습니다.
+<br />
+<br />
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# 고민했던 점
+
+### 파싱 데이터 로딩 최적화(pre load)
+    
+url을 Dom Tree로 나타내는 과정은 원래 다음과 같았습니다.
+    
+  1. 검색창에서 사용자에게 url을 입력받는다.
+  2. 검색 시, 받은 url로 요청을 보내 HTML 파일을 받는다.
+  3. 받은 HTML 파일은 파싱 후 데이터를 보여주게 된다.
+    
+이 과정에서 파싱은 비교적 시간이 걸리는 작업일 거라 생각해, 좀 더 사용자가 기다리는 시간을 줄이고자 하였습니다. 검색을 누른 다음 결과를 보여주는게 아니라, 미리 결과를 가지고 있다가 검색을 누를 때 이를 보여준다면 어떨까? 하고 생각하게 되었고 다음과 같은 과정으로 바꾸었습니다.
+    
+  1. 검색창에서 사용자에게 url을 입력받는다. 입력받은 url로 요청을 보내 HTML 파일을 파싱해둔다.
+  2. 검색하는 url이 수정되면 새로 요청을 보내 결과를 받는다.
+  3. 검색 결과를 눌렀을 때 미리 파싱해둔 데이터가 나타난다.
+    
+위와 같이 검색창에서 로드하는 동작을 추가하였습니다. 위 과정은 `rxjs`로 좀 더 용이하게 처리할 수 있었는데요. 이를 코드로 나타내면 다음과 같습니다.
+    
+  ```jsx
+  this.inputEventSubject$
+    .pipe(
+      debounceTime(300), // 0.3초의 debounce time을 가진 후
+      filter((url) => urlRegExp.test(url)), // url이 아니라면 필터링
+      tap((url) => this.url.setUrl(url)), // url 서비스에 url 등록
+      switchMap(async (url) => this.tree.parseDomTree(url)) // 새로 입력이 들어올 때까지 파싱 작업 요청. 요청이 새로 들어오면 취소.
+    )
+    .subscribe();
+  ```
+    
+위 과정으로 더 효율적인 방식으로 미리 데이터를 로드할 수 있게 되었습니다.
+    
+### BEM 구조 CSS 개발
+    
+CSS를 조금 더 효율적으로 작성하는 방식에 대해 고민하고 있습니다. 이전 프로젝트에서는 Atomic 방식으로 CSS를 적용할 수 있는 tailwindCSS를 사용하였습니다. Atomic 방식은 해당 element가 가지는 스타일 속성을 중심으로 스타일을 부여했는데요. 이번 프로젝트에서는 반대로 **element를 중심으로** 개발을 진행하는 방식으로 해보았습니다. BEM 구조는 형태와 의미에 맞게 네이밍 컨벤션을 부여하는 방식인데요. 최근에는 전통적인 CSS를 사용하는 일이 줄어 주류 개발 방식은 아니지만, BEM 컨벤션은 의미를 통해 엘리먼트를 분류할 수 있는 아주 효과적인 방식이라고 생각이 들어 사용해보았습니다. 
+    
+이번에 BEM 적용해보고 예전에 `styled-components`를 사용해보면서 느낀 점은 엘리먼트간 재사용성이 높은 스타일을 만들 수 있다는 점입니다. 컴포넌트를 중심으로 생각하다보니 CSS 파일을 볼 때에 HTML 구조를 보는 것과 같이 구조화 되어있고 가독성이 좋은 파일을 작성할 수 있습니다.
+    
+Atomic 방식의 스타일링의 단점은 element의 렌더링 로직과 스타일링 로직이 함께 있다는 점인데요. 렌더링 로직에는 element 구조와 내용, attribute와 event 연결 등 많은 내용이 들어가있는데 스타일링 내용까지 추가되니 많은 내용이 들어가게 되어버립니다. 그래서 개인적으로 스타일링 로직과 렌더링 로직을 분리하는 것을 선호하는 데, Atomic 패턴에서는 이를 구현하기가 쉽지 않았습니다.
+    
+다만 효율적인 CSS에 있어서는 Atomic 패턴이 훨씬 유리하게 작용하였습니다. 컴포넌트 중심 방식은 컴포넌트를 새로 만들 때마다 매 번 CSS를 새롭게 작성했습니다. Atomic 방식은 CSS를 훨씬 간소하게 작성할 수 있어 이러한 부담이 적었습니다. 파일 크기에 있어 효율성을 가질 수도 있고요.
+<br />
+<br />
+
+# 아쉬웠던 점
+
+### Dom 구조를 보여주는 방식
+    
+Dom Look up!은 Dom data를 효과적으로 보여주기 위한 고민을 많이 하였습니다. 원래는 말 그대로 Tree 형식으로 root element(html 혹은 body)에서 자식 요소로 뻗어나가는 방식으로 구상을 했었는데요. 넓고 광활한 웹 사이트의 data들을 Tree로 보여주는 것을 짧은 시간 내에 하기에는 무리라고 생각해, 폴더 구조를 보여주는 방식에서 착안해 시각화를 하게 되었습니다.
+    
+시간과 타협을 해 간소화 된 방식으로 만들기는 했지만, Dom Tree 구조를 좀 더 Tree 방식으로 보여줬다면 더 좋았을 것 같다는 생각을 했습니다.
+    
+### 더 깊은 세계를 탐험하지 못한 점
+    
+이번에 `Angular`를 사용해보면서 `Angular`에 대해서 완전히 이해하지는 못해서 아쉬움이 남습니다. 비교적 러닝 커브가 있다보니 프로젝트 초반은 `Angular`를 학습하는 데에만 온전히 투자를 해야했는데요. 처음 `Angular`를 시작할 때는 Push 방식의 `Angular`와 Pull 방식의 차이를 이해해보고자 노력했지만 사실 겉보기에 차이가 있는 부분은 아니고, 개발 방식에 미묘한 차이가 있는데 이를 잘 느껴보지 못해서 아쉬웠습니다. 
+    
+또 디렉티브를 공부하면서 커스텀 디렉티브를 활용해서 개발해보고 싶었는데 그러지 못해 아쉽습니다. `ngSwitch` 를 활용해서 해당하는 Type을 검사하는 로직을 작성하는 일이 있었는데, 기존 타입스크립에서는 switch 문으로 type 좁히기가 되었는데, `Angular`의 `ngSwitch`디렉티브에서는 지원이 되지 않았습니다. 찾아보니 isOperater를 통해서 타입 명제 문법으로 해결하는 것을 보았는데요. Type 좁히기를 할 수 있는 `ngSwitch`를 만들어보면 좋을 것 같다는 생각을 했는데, 시간상 아쉽게 하지 못해 아쉬웠습니다.
